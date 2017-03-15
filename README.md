@@ -3,4 +3,4 @@
 
 Autorzy: Dawid Keller, Bartosz Nibelski, Aleksander Januszewski
 
-Nazwa projektu do ustalenia.
+Projekt : Komercyjna aplikacja do odtwarzania Youtube.
