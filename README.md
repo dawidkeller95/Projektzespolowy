@@ -1,6 +1,6 @@
 # Projektzespolowy
 :)
 
-Autorzy: Dawid Keller, Bartosz Nibelski, Aleksander Januszewski
+Autorzy: Dawid Keller, Bartosz Nibelski, Aleksander Januszewski , Sebastian Bojańczyk
 
-Nazwa projektu do ustalenia.
+Projekt : Komercyjna aplikacja do odtwarzania Youtube.
