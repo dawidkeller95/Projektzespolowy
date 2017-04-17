@@ -63,6 +63,62 @@ public class Database {
 		return rs;
 	}
 	
+	public ResultSet getAdByID(int id){
+		ResultSet rs = getResultSet("select * from reklama r "
+				+ "left outer join reklamodawca rd on r.Rekd_ID = rd.Rekd_ID "
+				+ "where Rek_ID = "+id);
+		return rs;
+	}
+	/**
+	 * Aktualizuje dane wiersza o podanym ID
+	 * @param rowID
+	 * @param nazwa
+	 * @param RekdID
+	 * @param RekPlanWysw
+	 * @param RekTyp
+	 */
+	public void updateAdbyID(int rowID, String nazwa, int RekdID, int RekPlanWysw, int RekTyp){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("UPDATE reklama "
+					+ "SET Rek_Nazwa = '"+ nazwa +"', "
+					+ "Rekd_ID = " +RekdID+", "
+					+ "Rek_PlanowanaIloscWysw = " + RekPlanWysw +", "
+					+ "Rek_Typ = " +RekTyp+" "
+					+ "WHERE Rek_ID = "+rowID+";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void addAd(String nazwa, int RekdID, int RekPlanWysw, int RekTyp){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("INSERT INTO reklama (Rek_ID, Rek_Nazwa, Rekd_ID, Rek_PlanowanaIloscWysw, Rek_Typ, Rek_IloscWyswietlen) "
+					+ "VALUES (NULL, '"+ nazwa +"', "
+					+ "" +RekdID+", "
+					+ "" + RekPlanWysw +", "
+					+ "" +RekTyp+", 0);");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void deleteAd(int id){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("DELETE FROM reklama WHERE Rek_ID = "+ id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	/**
 	 * Wykonuje próbe logowania do systemu.
 	 * @param user - login 
