@@ -61,6 +61,8 @@ public class MainWindow extends JFrame {
 			ResultSet rs = db.getAds();
 			while (rs.next()) { //powtarzaj dla wszystkich wierszy tabeli
 			    Vector data = new Vector(9);
+			    //id
+			    data.add(rs.getInt("Rek_ID"));
 			    //nazwa reklamy
 			    data.add(rs.getString(3));
 			    //typ reklamy
@@ -90,12 +92,47 @@ public class MainWindow extends JFrame {
 	
 	private void openAddAdDialog(){
 		new AdvertEditWindow(db).setVisible(true);
+		refreshTable();
 	}
 	
+	private void openEditAdDialog(){
+		
+		try{
+		String selID = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+		ResultSet rs = db.getAdByID(Integer.parseInt(selID));
+		new AdvertEditWindow(db,rs).setVisible(true);
+		refreshTable();
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(this, "Wybierz element!");
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteRow(){
+		int selID;
+		String selName;
+		try{
+			selID = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+			selName = table.getModel().getValueAt(table.getSelectedRow(), 1).toString();
+			int pytanie = JOptionPane.showOptionDialog(this, new String("Czy na pewno chcesz usunąć reklamę \""+ selName +"\"?"), "Uwaga", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+			if(pytanie == JOptionPane.YES_OPTION){
+				db.deleteAd(selID);
+			}
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(this, "Wybierz element!");
+			e.printStackTrace();
+		}
+
+
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public MainWindow(Database db, String loggedAs) {
+		setTitle("Reklamy");
 		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 964, 684);
@@ -203,9 +240,20 @@ public class MainWindow extends JFrame {
 		panel_1.add(btnNewButton, "2, 2, fill, top");
 		
 		JButton btnUsuReklam = new JButton("Usuń reklamę");
+		btnUsuReklam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				deleteRow();
+				refreshTable();
+			}
+		});
 		panel_1.add(btnUsuReklam, "2, 4, fill, top");
 		
 		JButton btnEdytujReklam = new JButton("Edytuj reklamę");
+		btnEdytujReklam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openEditAdDialog();
+			}
+		});
 		panel_1.add(btnEdytujReklam, "2, 6");
 		
 		JCheckBox chckbxAktywna = new JCheckBox("Aktywna");
@@ -229,17 +277,16 @@ public class MainWindow extends JFrame {
 				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Nazwa", "Typ", "Aktywna", "Wy\u015Bwietle\u0144", "Planowane wy\u015Bwietlenia", "Reklamodawca"
+				"ID","Nazwa", "Typ", "Aktywna", "Wy\u015Bwietle\u0144", "Planowane wy\u015Bwietlenia", "Reklamodawca"
 			}
 		) {
-			boolean[] columnEditables = new boolean[] {
-				true, true, true, true, true, false, true
-			};
 			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+				return false;
 			}
 		};
+		
 		refreshTable();
+		table.removeColumn(table.getColumnModel().getColumn(0));
 		scrollPane.setViewportView(table);
 	}
 

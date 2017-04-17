@@ -18,26 +18,36 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class AdvertEditWindow extends JFrame {
+public class AdvertEditWindow extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField AdNameField;
+	private JTextField planViewCountField;
+	private JRadioButton videoRButton;
+	private JRadioButton bannerRButton;
+	private JComboBox<String> AdvertiserComboBox;
 	private Database db;
-
+	private ArrayList<Integer> AdvertisersIDs;
+	private ResultSet rowRS;
+	private boolean editMode;
+	
 	private DefaultComboBoxModel<String> getAdvertisers(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		ResultSet rs = db.getAdvertisers();
-		model.addElement("brak");
 		try {
 			while(rs.next()){
+				AdvertisersIDs.add(rs.getInt("Rekd_ID"));
 				model.addElement(rs.getString("Rekd_Nazwa"));
 			}
 		} catch (SQLException e) {
@@ -49,11 +59,15 @@ public class AdvertEditWindow extends JFrame {
 	
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
 	public AdvertEditWindow(Database db) {
+		setModal(true);
 		this.db = db;
+		setTitle("Dodaj reklamę");
+		AdvertisersIDs = new ArrayList<Integer>();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 454, 200);
+		setBounds(100, 100, 454, 226);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,30 +98,32 @@ public class AdvertEditWindow extends JFrame {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblNazwa = new JLabel("Nazwa:");
 		contentPane.add(lblNazwa, "2, 2, right, default");
 		
-		textField = new JTextField();
-		contentPane.add(textField, "4, 2, fill, default");
-		textField.setColumns(10);
+		AdNameField = new JTextField();
+		contentPane.add(AdNameField, "4, 2, fill, default");
+		AdNameField.setColumns(10);
 		
 		JLabel lblReklamodawca = new JLabel("Reklamodawca:");
 		contentPane.add(lblReklamodawca, "2, 4, right, default");
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		AdvertiserComboBox = new JComboBox<String>();
 		DefaultComboBoxModel<String> model = getAdvertisers();
-		comboBox.setModel(model);
-		contentPane.add(comboBox, "4, 4, fill, default");
+		AdvertiserComboBox.setModel(model);
+		contentPane.add(AdvertiserComboBox, "4, 4, fill, default");
 		
 		
 		JLabel lblPlanowanaIloWywietle = new JLabel("Planowana ilość wyświetleń");
 		contentPane.add(lblPlanowanaIloWywietle, "2, 6, right, default");
 		
-		textField_1 = new JTextField();
-		contentPane.add(textField_1, "4, 6, fill, default");
-		textField_1.setColumns(10);
+		planViewCountField = new JTextField();
+		contentPane.add(planViewCountField, "4, 6, fill, default");
+		planViewCountField.setColumns(10);
 		
 		JLabel lblTyp = new JLabel("Typ:");
 		contentPane.add(lblTyp, "2, 8, right, default");
@@ -117,16 +133,64 @@ public class AdvertEditWindow extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		ButtonGroup group = new ButtonGroup();
-		JRadioButton radioButton = new JRadioButton("Baner");
-		panel.add(radioButton);
+		bannerRButton = new JRadioButton("Baner");
+		panel.add(bannerRButton);
 		
-		JRadioButton radioButton_1 = new JRadioButton("Wideo");
-		panel.add(radioButton_1);
-		group.add(radioButton);
-		group.add(radioButton_1);
+		videoRButton = new JRadioButton("Wideo");
+		panel.add(videoRButton);
+		group.add(bannerRButton);
+		group.add(videoRButton);
 		
-		JButton btnZatwierd = new JButton("Zatwierdz");
-		contentPane.add(btnZatwierd, "2, 10, 5, 1, center, default");
+		JButton btnZatwierdz = new JButton("Zatwierdz");
+		btnZatwierdz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Zatwierdz();
+			}
+		});
+		contentPane.add(btnZatwierdz, "2, 12, 3, 1, center, default");
+		editMode = false;
 	}
+	
+	public AdvertEditWindow(Database db, ResultSet rowData){
+		this(db);
+		setTitle("Edytuj reklamę");
+		try {
+			rowData.next();
+			rowRS = rowData;
+			AdNameField.setText(rowData.getString("Rek_Nazwa"));
+			planViewCountField.setText(rowData.getString("Rek_PlanowanaIloscWysw"));
+			int index = AdvertisersIDs.indexOf(rowData.getInt("Rekd_ID"));
+			AdvertiserComboBox.setSelectedIndex(index);
+			if(rowData.getInt("Rek_Typ") == 1) videoRButton.setSelected(true);
+			else if(rowData.getInt("Rek_Typ") == 2) bannerRButton.setSelected(true);
+			editMode = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private void Zatwierdz(){
+		int typ = 0;
+		if(videoRButton.isSelected()) typ = 1;
+		else if(bannerRButton.isSelected()) typ = 2;
+		
+		
+		if(editMode){
+			try {
+				db.updateAdbyID(rowRS.getInt("Rek_ID"), AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ);
+			} catch (NumberFormatException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			db.addAd(AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ);
+		}
+		this.dispose();
+	}
+		
 
 }

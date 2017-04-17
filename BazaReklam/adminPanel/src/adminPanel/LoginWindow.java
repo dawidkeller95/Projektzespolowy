@@ -11,7 +11,10 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,6 +22,7 @@ import java.awt.Dimension;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class LoginWindow extends JFrame {
 
@@ -53,10 +57,18 @@ public class LoginWindow extends JFrame {
 		}
 	}
 	
+	AbstractAction btnZalogujAction = new AbstractAction() {
+		public void actionPerformed(ActionEvent arg0) {
+			login();
+		}
+	};
+	
 	/**
 	 * Create the frame.
 	 */
 	public LoginWindow() {
+		setTitle("Logowanie do bazy danych");
+		setResizable(false);
 		db = new Database();
 		db.connectWithDataBase();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,11 +106,10 @@ public class LoginWindow extends JFrame {
 		contentPane.add(passwordField, "4, 4, fill, default");
 		
 		JButton btnZaloguj = new JButton("Zaloguj");
-		btnZaloguj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				login();
-			}
-		});
+		btnZaloguj.setMnemonic(KeyEvent.VK_ENTER);
+		btnZaloguj.addActionListener(btnZalogujAction);
+		btnZaloguj.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ENTER"), "pressed");
+        btnZaloguj.getActionMap().put("pressed", btnZalogujAction);
 		contentPane.add(btnZaloguj, "2, 6, 3, 1, center, top");
 	}
 
