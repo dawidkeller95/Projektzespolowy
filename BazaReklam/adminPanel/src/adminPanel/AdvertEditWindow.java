@@ -28,6 +28,7 @@ import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class AdvertEditWindow extends JDialog {
 
@@ -41,6 +42,8 @@ public class AdvertEditWindow extends JDialog {
 	private ArrayList<Integer> AdvertisersIDs;
 	private ResultSet rowRS;
 	private boolean editMode;
+	private JLabel label;
+	private JCheckBox chckbxAktywna;
 	
 	private DefaultComboBoxModel<String> getAdvertisers(){
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
@@ -147,6 +150,12 @@ public class AdvertEditWindow extends JDialog {
 				Zatwierdz();
 			}
 		});
+		
+		label = new JLabel("");
+		contentPane.add(label, "2, 10");
+		
+		chckbxAktywna = new JCheckBox("Aktywna");
+		contentPane.add(chckbxAktywna, "4, 10");
 		contentPane.add(btnZatwierdz, "2, 12, 3, 1, center, default");
 		editMode = false;
 	}
@@ -163,6 +172,7 @@ public class AdvertEditWindow extends JDialog {
 			AdvertiserComboBox.setSelectedIndex(index);
 			if(rowData.getInt("Rek_Typ") == 1) videoRButton.setSelected(true);
 			else if(rowData.getInt("Rek_Typ") == 2) bannerRButton.setSelected(true);
+			chckbxAktywna.setSelected(rowData.getBoolean("Rek_CzyAktywna"));
 			editMode = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -180,14 +190,14 @@ public class AdvertEditWindow extends JDialog {
 		
 		if(editMode){
 			try {
-				db.updateAdbyID(rowRS.getInt("Rek_ID"), AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ);
+				db.updateAdbyID(rowRS.getInt("Rek_ID"), AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
 			} catch (NumberFormatException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		else{
-			db.addAd(AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ);
+			db.addAd(AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
 		}
 		this.dispose();
 	}

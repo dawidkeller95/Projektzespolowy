@@ -95,6 +95,22 @@ public class MainWindow extends JFrame {
 		refreshTable();
 	}
 	
+	private void openAdFilesDialog(){
+		try{
+			String selID = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+			ResultSet rs = db.getAdFiles(Integer.parseInt(selID));
+			new AdFilesEditWindow(db,rs).setVisible(true);
+			}
+			catch(ArrayIndexOutOfBoundsException e){
+				JOptionPane.showMessageDialog(this, "Wybierz element!");
+				e.printStackTrace();
+			}
+	}
+	
+	private void openAdvertisers(){
+		new AdvertisersEditWindow(db).setVisible(true);
+	}
+	
 	private void openEditAdDialog(){
 		
 		try{
@@ -256,12 +272,22 @@ public class MainWindow extends JFrame {
 		});
 		panel_1.add(btnEdytujReklam, "2, 6");
 		
-		JCheckBox chckbxAktywna = new JCheckBox("Aktywna");
-		panel_1.add(chckbxAktywna, "2, 12");
-		
-		JButton btnWywietlPlikiWideo = new JButton("Wyświetl pliki wideo zazn. reklamy");
+		JButton btnWywietlPlikiWideo = new JButton("Pliki wideo zazn. reklamy");
+		btnWywietlPlikiWideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openAdFilesDialog();
+			}
+		});
 		btnWywietlPlikiWideo.setActionCommand("");
 		panel_1.add(btnWywietlPlikiWideo, "2, 14");
+		
+		JButton btnWywietlListReklamodawcw = new JButton("Wyświetl listę reklamodawców");
+		btnWywietlListReklamodawcw.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openAdvertisers();
+			}
+		});
+		panel_1.add(btnWywietlListReklamodawcw, "2, 16");
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.CENTER);
@@ -271,7 +297,8 @@ public class MainWindow extends JFrame {
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		table.setFillsViewportHeight(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		model = new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},

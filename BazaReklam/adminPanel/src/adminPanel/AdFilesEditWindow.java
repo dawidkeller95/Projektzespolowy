@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -20,13 +23,17 @@ public class AdFilesEditWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-
+	private DefaultTableModel model;
+	private Database db;
 
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
-	public AdFilesEditWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public AdFilesEditWindow(Database db) {
+		this.db = db;
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 456, 504);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,14 +67,36 @@ public class AdFilesEditWindow extends JFrame {
 		
 		table = new JTable();
 		table.setFillsViewportHeight(true);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nazwa", "Typ", "Format", "Rozmiar", "D\u0142ugo\u015B\u0107", "Rozdzielczo\u015B\u0107"
+		model = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"ID", "Typ", "Format", "Rozmiar", "D\u0142ugo\u015B\u0107", "Rozdzielczo\u015B\u0107"
+				}
+			) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
 			}
-		));
+		};
+		table.setModel(model);
+		table.removeColumn(table.getColumnModel().getColumn(0));
 		scrollPane.setViewportView(table);
+	}
+	
+	public AdFilesEditWindow(Database db, ResultSet selectedAd){
+		this(db);
+		try {
+			while(selectedAd.next()){
+				Vector<String> data = new Vector<String>(2);
+				data.addElement(selectedAd.getString("Plik_ID"));
+				data.addElement(selectedAd.getString("Plik_Sciezka"));
+				model.addRow(data);
+				table.setModel(model);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

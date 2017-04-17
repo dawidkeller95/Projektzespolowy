@@ -69,6 +69,12 @@ public class Database {
 				+ "where Rek_ID = "+id);
 		return rs;
 	}
+	
+	public ResultSet getAdFiles(int id){
+		ResultSet rs = getResultSet("select * from pliki r "
+				+ "where Rek_ID = "+id);
+		return rs;
+	}
 	/**
 	 * Aktualizuje dane wiersza o podanym ID
 	 * @param rowID
@@ -77,14 +83,16 @@ public class Database {
 	 * @param RekPlanWysw
 	 * @param RekTyp
 	 */
-	public void updateAdbyID(int rowID, String nazwa, int RekdID, int RekPlanWysw, int RekTyp){
+	public void updateAdbyID(int rowID, String nazwa, int RekdID, int RekPlanWysw, int RekTyp, boolean RekAkt){
 		try {
 			Statement stm = conn.createStatement();
+			int RekAktI = (RekAkt) ? 1 : 0;
 			stm.execute("UPDATE reklama "
 					+ "SET Rek_Nazwa = '"+ nazwa +"', "
 					+ "Rekd_ID = " +RekdID+", "
 					+ "Rek_PlanowanaIloscWysw = " + RekPlanWysw +", "
-					+ "Rek_Typ = " +RekTyp+" "
+					+ "Rek_Typ = " +RekTyp+", "
+					+ "Rek_CzyAktywna = "+RekAktI+" "
 					+ "WHERE Rek_ID = "+rowID+";");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -93,14 +101,16 @@ public class Database {
 		
 	}
 	
-	public void addAd(String nazwa, int RekdID, int RekPlanWysw, int RekTyp){
+	public void addAd(String nazwa, int RekdID, int RekPlanWysw, int RekTyp, boolean RekAkt){
 		try {
 			Statement stm = conn.createStatement();
-			stm.execute("INSERT INTO reklama (Rek_ID, Rek_Nazwa, Rekd_ID, Rek_PlanowanaIloscWysw, Rek_Typ, Rek_IloscWyswietlen) "
+			int RekAktI = (RekAkt) ? 1 : 0;
+			stm.execute("INSERT INTO reklama (Rek_ID, Rek_Nazwa, Rekd_ID, Rek_PlanowanaIloscWysw, Rek_Typ, Rek_IloscWyswietlen, Rek_CzyAktywna) "
 					+ "VALUES (NULL, '"+ nazwa +"', "
 					+ "" +RekdID+", "
 					+ "" + RekPlanWysw +", "
-					+ "" +RekTyp+", 0);");
+					+ "" +RekTyp+", 0, "
+					+ "" + RekAktI+ ");");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
