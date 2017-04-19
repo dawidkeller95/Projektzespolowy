@@ -20,9 +20,9 @@ public class Database {
 	private Connection conn;
 	
 	/**
-	 * Łączy się z lokalnym serwerem MySQL na porcie 3306, do konkretnej bazy danych.
-	 * W przypadku niepowodzenia połączenia, program kończy działanie.
-	 * @param name - nazwa bazy danych do połączenia
+	 * Ĺ�Ä…czy siÄ™ z lokalnym serwerem MySQL na porcie 3306, do konkretnej bazy danych.
+	 * W przypadku niepowodzenia poĹ‚Ä…czenia, program koĹ„czy dziaĹ‚anie.
+	 * @param name - nazwa bazy danych do poĹ‚Ä…czenia
 	 */
 	public void connectWithDataBase(){
 		try{
@@ -31,16 +31,16 @@ public class Database {
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Nie udało sie połączyć z bazą!");
+			JOptionPane.showMessageDialog(null, "Nie udało się połączyć z bazą!");
 			System.exit(0);
 		}
 	}
 	/**
-	 * Wykonuje podaną kwerendę i zwraca obiekt ResultSet.
+	 * Wykonuje podanÄ… kwerendÄ™ i zwraca obiekt ResultSet.
 	 * @param query - kwerenda
 	 * @return obiekt ResultSet
 	 */
-	private ResultSet getResultSet(String query ){
+	ResultSet getResultSet(String query ){
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(query);
@@ -130,10 +130,10 @@ public class Database {
 	}
 	
 	/**
-	 * Wykonuje próbe logowania do systemu.
+	 * Wykonuje prĂłbe logowania do systemu.
 	 * @param user - login 
-	 * @param pass - hasło podane tekstem otwartym
-	 * @return true jeśli logowanie zakończy się powodzeniem
+	 * @param pass - hasĹ‚o podane tekstem otwartym
+	 * @return true jeĹ›li logowanie zakoĹ„czy siÄ™ powodzeniem
 	 */
 	public boolean login(String user, String pass){
 		try {
