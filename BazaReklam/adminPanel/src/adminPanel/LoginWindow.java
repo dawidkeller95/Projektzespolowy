@@ -12,6 +12,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -67,26 +69,42 @@ public class LoginWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginWindow() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		setTitle("Logowanie do bazy danych");
 		setResizable(false);
 		db = new Database();
 		db.connectWithDataBase();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 384, 212);
+		setBounds(100, 100, 384, 133);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				FormSpecs.PREF_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("300px:grow"),},
 			new RowSpec[] {
-				RowSpec.decode("36px"),
+				RowSpec.decode("10px"),
 				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
+				RowSpec.decode("8px"),
 				RowSpec.decode("20px"),
-				RowSpec.decode("31px"),
+				RowSpec.decode("10px"),
 				RowSpec.decode("23px"),}));
 		
 		JLabel lblLogin = new JLabel("Login:");
@@ -110,7 +128,7 @@ public class LoginWindow extends JFrame {
 		btnZaloguj.addActionListener(btnZalogujAction);
 		btnZaloguj.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ENTER"), "pressed");
         btnZaloguj.getActionMap().put("pressed", btnZalogujAction);
-		contentPane.add(btnZaloguj, "2, 6, 3, 1, center, top");
+		contentPane.add(btnZaloguj, "1, 6, 4, 1, center, top");
 	}
 
 }

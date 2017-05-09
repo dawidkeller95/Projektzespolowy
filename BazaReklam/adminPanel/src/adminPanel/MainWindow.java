@@ -98,8 +98,7 @@ public class MainWindow extends JFrame {
 	private void openAdFilesDialog(){
 		try{
 			String selID = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
-			ResultSet rs = db.getAdFiles(Integer.parseInt(selID));
-			new AdFilesEditWindow(db,rs).setVisible(true);
+			new AdFilesEditWindow(db,Integer.parseInt(selID)).setVisible(true);
 			}
 			catch(ArrayIndexOutOfBoundsException e){
 				JOptionPane.showMessageDialog(this, "Wybierz element!");
@@ -183,7 +182,7 @@ public class MainWindow extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panel.add(panel_4, BorderLayout.CENTER);
 		
 		JLabel lblNewLabel = new JLabel("Jesteś zalogowany jako:");
@@ -297,6 +296,7 @@ public class MainWindow extends JFrame {
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setFillsViewportHeight(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		model = new DefaultTableModel(
@@ -314,6 +314,8 @@ public class MainWindow extends JFrame {
 		
 		refreshTable();
 		table.removeColumn(table.getColumnModel().getColumn(0));
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(5);
 		scrollPane.setViewportView(table);
 	}
 

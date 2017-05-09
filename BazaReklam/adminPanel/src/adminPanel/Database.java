@@ -27,7 +27,7 @@ public class Database {
 	public void connectWithDataBase(){
 		try{
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ads?UseSSL=false&user=root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ads?UseSSL=false&user=root&characterEncoding=utf8");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -56,6 +56,11 @@ public class Database {
 		ResultSet rs = getResultSet("select * from reklamodawca");
 		return rs;
 	}
+	public ResultSet getAdvertiserByID(int id){
+		ResultSet rs = getResultSet("select * from reklamodawca "
+				+ "where Rekd_ID = "+id);
+		return rs;
+	}
 	
 	public ResultSet getAds(){
 		ResultSet rs = getResultSet("select * from reklama r "
@@ -71,10 +76,18 @@ public class Database {
 	}
 	
 	public ResultSet getAdFiles(int id){
-		ResultSet rs = getResultSet("select * from pliki r "
+		ResultSet rs = getResultSet("select * from pliki "
 				+ "where Rek_ID = "+id);
 		return rs;
 	}
+	
+	public ResultSet getAdFileByID(int id){
+		ResultSet rs = getResultSet("select * from pliki "
+				+ "where Plik_ID = "+id);
+		return rs;
+	}
+	
+	
 	/**
 	 * Aktualizuje dane wiersza o podanym ID
 	 * @param rowID
@@ -129,8 +142,91 @@ public class Database {
 		
 	}
 	
+	public void addFile(String PlikSciezka, int idRekl, String PlikFormat, String PlikRozdz){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("INSERT INTO pliki (Plik_ID, Rek_ID, Plik_Sciezka, Plik_Format, Plik_Rozdziel) "
+					+ "VALUES (NULL, '"+ idRekl +"', "
+					+ "'" +PlikSciezka+"', "
+					+ "'" + PlikFormat +"', "
+					+ "'" + PlikRozdz+ "');");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateFile(int plikID, String PlikSciezka, int idRekl, String PlikFormat, String PlikRozdz){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("UPDATE pliki "
+					+ "SET Rek_ID = '"+ idRekl +"', "
+					+ "Plik_Sciezka = '" +PlikSciezka+"', "
+					+ "Plik_Format = '" + PlikFormat +"', "
+					+ "Plik_Rozdziel = '" +PlikRozdz+"' "
+					+ "WHERE Plik_ID = "+plikID+";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void deleteFile(int id){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("DELETE FROM pliki WHERE Plik_ID = "+ id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void addAdvertiser(String RekdNazwa, String RekdAdres, String RekdTelefon, String RekdEmail){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("INSERT INTO reklamodawca (Rekd_ID, Rekd_Nazwa, Rekd_Adres, Rekd_Telefon, Rekd_Email) "
+					+ "VALUES (NULL, '"+ RekdNazwa +"', "
+					+ "'" +RekdAdres+"', "
+					+ "'" + RekdTelefon +"', "
+					+ "'" + RekdEmail+ "');");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateAdvertiser(int RekdID, String RekdNazwa, String RekdAdres, String RekdTelefon, String RekdEmail){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("UPDATE reklamodawca "
+					+ "SET Rekd_Nazwa = '"+ RekdNazwa +"', "
+					+ "Rekd_Adres = '" +RekdAdres+"', "
+					+ "Rekd_Telefon = '" + RekdTelefon +"', "
+					+ "Rekd_Email = '" +RekdEmail+"' "
+					+ "WHERE Rekd_ID = "+RekdID+";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void deleteAdvertiser(int id){
+		try {
+			Statement stm = conn.createStatement();
+			stm.execute("DELETE FROM reklamodawca WHERE Rekd_ID = "+ id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	/**
-	 * Wykonuje prĂłbe logowania do systemu.
+	 * Wykonuje próbę logowania do systemu.
 	 * @param user - login 
 	 * @param pass - hasĹ‚o podane tekstem otwartym
 	 * @return true jeĹ›li logowanie zakoĹ„czy siÄ™ powodzeniem

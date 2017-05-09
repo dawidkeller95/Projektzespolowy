@@ -29,6 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import java.awt.Window.Type;
 
 public class AdvertEditWindow extends JDialog {
 
@@ -65,12 +66,13 @@ public class AdvertEditWindow extends JDialog {
 	 * @wbp.parser.constructor
 	 */
 	public AdvertEditWindow(Database db) {
+		setType(Type.POPUP);
 		setModal(true);
 		this.db = db;
 		setTitle("Dodaj reklamę");
 		AdvertisersIDs = new ArrayList<Integer>();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 454, 226);
+		setBounds(100, 100, 454, 207);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
