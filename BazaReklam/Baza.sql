@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017-04-12 01:45:20                          */
+/* Created on:     2017-05-10 02:59:59                          */
 /*==============================================================*/
 
 
@@ -31,6 +31,8 @@ create table Pliki
    Plik_ID              int not null,
    Rek_ID               int not null,
    Plik_Œcie¿ka         varchar(1024),
+   Plik_Format          varchar(5),
+   Plik_Rozdziel        varchar(50),
    primary key (Plik_ID)
 );
 
