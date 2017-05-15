@@ -1,0 +1,90 @@
+Tytuł: Sprawdzenie działania ostrzeżenia przy braku połączenia z bazą
+Warunek wstępny: Brak uruchomionego serwera baz danych
+
+Kroki do wykonania
+1. Uruchom panel administracyjny
+
+Oczekiwany rezultat: Wyświetlenie komunikatu informującego o braku połączenia z bazą
+Warunki końcowe: Program kończy działanie
+
+
+
+Tytuł: Sprawdzenie modułu logowania
+Warunek wstępny: uruchomiony serwer MySQL
+
+Kroki do wykonania
+1. W oknie logowania, wpisz niepoprawny login i dowolne hasło
+2. Wpisz poprawny login, lecz niepoprawne hasło
+
+Oczekiwany rezultat: Wyswietlenie komunikatu o niepowodzeniu logowania
+Warunki końcowe: Niepowodzenie zalogowania do systemu
+
+
+
+Tytuł: Logowanie do systemu
+Warunek wstępny: uruchomiony serwer MySQL z bazą danych Ads
+
+Kroki do wykonania
+1. Uruchom serwer MySQL (uruchom plik wsadowy mysql_start.bat)
+2. Podaj istniejący login : admin
+3. Podaj istniejące hasło : 123456
+4. Wciśnij klawisz Enter lub wciśnij przycisk "Zaloguj"
+
+Oczekiwany rezultat: Zalogowanie się do panelu administratora pod nazwą admina "admin"
+Warunki końcowe: Administrator jest zalogowany
+
+
+
+Tytuł: Dodawanie nowej reklamy
+Warunek wstępny: Administrator jest zalogowany do panelu
+Kroki do wykonania
+1. Wciśnij przycisk Dodaj reklamę
+2. Uzupełnij pola dowolnymi wartościami
+3. Wciśnij przycisk Zatwierdź
+
+Oczekiwany rezultat: W tabeli reklam powinna pojawić się dodana reklama
+
+
+
+Tytuł: Edycja reklamy
+Warunek wstępny: Administrator jest zalogowany do panelu
+Kroki do wykonania
+1. Zaznacz dowolną reklamę
+2. Wciśnij przycisk Edytuj reklamę
+3. Zmień dowolne pola
+4. Wciśnij przycisk zatwierdź
+
+Oczekiwany rezultat: Zaznaczona reklama powinna zmienić wartość
+
+
+
+Tytuł: Usuwanie reklamy
+Warunek wstępny: Administrator jest zalogowany do panelu
+Kroki do wykonania
+1. Zaznacz dowolną reklamę
+2. Wciśnij przycisk Usuń reklamę
+3. Potwierdź usunięcie
+
+Oczekiwany rezultat: Z tabeli reklam powinna zniknąć zaznaczona reklama
+
+
+
+Tytuł: Obsługa polskich znaków
+Warunek wstępny: brak
+Kroki do wykonania
+1. Dodaj lub edytuj dowolną reklamę
+2. W dowolnym polach tekstowtych użyj polskich znaków
+3. Zatwierdź
+
+Oczekiwany rezultat: Powinny pojawiać się poprawnie polskie znaki
+
+
+
+Tytuł:Test pozostałych tabel
+Kroki do wykonania
+1. Dodaj, edytuj i usuń wpis Reklamodawcy
+2. Dodaj, edytuj i usuń wpis pliku dowolnej reklamy
+
+Oczekiwany rezultat: Reakcja tabeli na wprowadzane zmiany
+
+
