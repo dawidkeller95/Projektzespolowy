@@ -30,7 +30,7 @@ create table Pliki
 (
    Plik_ID              int not null,
    Rek_ID               int not null,
-   Plik_åcieøka         varchar(1024),
+   Plik_≈öcie≈ºka         varchar(1024),
    Plik_Format          varchar(5),
    Plik_Rozdziel        varchar(50),
    primary key (Plik_ID)
