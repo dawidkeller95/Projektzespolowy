@@ -21,8 +21,10 @@ public class VLCPlayer {
      */
     public VLCPlayer(){
         currentFile = "";
+        //NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), 
+          //      "lib");
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), 
-                "lib");
+                "C:\\Program Files\\VideoLAN\\VLC");
         Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(),LibVlc.class);
         mpf = new MediaPlayerFactory();
         emp = mpf.newEmbeddedMediaPlayer();

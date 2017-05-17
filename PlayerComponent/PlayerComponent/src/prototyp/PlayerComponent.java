@@ -11,12 +11,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * Local video player component object
@@ -24,6 +18,90 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * @version 1.0
  */
 public class PlayerComponent extends JPanel {
+
+    /**
+     * @return the chooserButtonBackG
+     */
+    public Color getBackGChooserButton() {
+        return chooserButtonBackG;
+    }
+
+    /**
+     * @param chooserButtonBackG the chooserButtonBackG to set
+     */
+    public void setBackGChooserButton(Color chooserButtonBackG) {
+        this.chooserButtonBackG = chooserButtonBackG;
+    }
+
+    /**
+     * @return the stopButtonBackG
+     */
+    public Color getBackGStopButton() {
+        return stopButtonBackG;
+    }
+
+    /**
+     * @param stopButtonBackG the stopButtonBackG to set
+     */
+    public void setBackGStopButton(Color stopButtonBackG) {
+        this.stopButtonBackG = stopButtonBackG;
+    }
+
+    /**
+     * @return the moveLeftBackG
+     */
+    public Color getBackGMoveLeft() {
+        return moveLeftBackG;
+    }
+
+    /**
+     * @param moveLeftBackG the moveLeftBackG to set
+     */
+    public void setBackGMoveLeft(Color moveLeftBackG) {
+        this.moveLeftBackG = moveLeftBackG;
+    }
+
+    /**
+     * @return the playpauseBackG
+     */
+    public Color getBackGPlaypause() {
+        return playpauseBackG;
+    }
+
+    /**
+     * @param playpauseBackG the playpauseBackG to set
+     */
+    public void setBackGPlaypause(Color playpauseBackG) {
+        this.playpauseBackG = playpauseBackG;
+    }
+
+    /**
+     * @param moveRightBackG the moveRightBackG to set
+     */
+    public void setBackGMoveRight(Color moveRightBackG) {
+        this.moveRightBackG = moveRightBackG;
+    }
+
+    /**
+     * @param aMoveLeftButton the moveLeftButton to set
+     */
+    public static void setMoveLeftButton(MoveBackwardButton aMoveLeftButton) {
+        moveLeftButton = aMoveLeftButton;
+    }
+
+    /**
+     * @param aPlaypauseButton the playpauseButton to set
+     */
+    public static void setPlaypauseButton(PlayPauseButton aPlaypauseButton) {
+        playpauseButton = aPlaypauseButton;
+    }
+
+    /**
+     * @param aMoveRightButton the moveRightButton to set
+     */
+    public static void setMoveRightButton(MoveForwardButton aMoveRightButton) {
+        moveRightButton = aMoveRightButton;
+    }
         
         /**
         * Default constructor
@@ -48,25 +126,39 @@ public class PlayerComponent extends JPanel {
                 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		panel.add(vlcplayer.getCanvas());
+		
+                vlcplayer.getCanvas().addMouseListener(new MouseAdapter(){
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        if (VLCPlayer.emp.isPlaying())
+                            VLCPlayer.emp.pause();
+                        else
+                            VLCPlayer.emp.play();
+                    }       
+                });
+                panel.add(vlcplayer.getCanvas());
 		add(panel,BorderLayout.CENTER);		
 		vlcplayer.refreshCanvas();
                 vlcplayer.setFile(file);
                 
-		stopButton = new JButton();
-                setButtonIcon(stopButton,"stop.png" );
+                downPanelColor = Color.LIGHT_GRAY;
+                
+		stopButton = new StopButton();
+                stopButtonColor = Color.BLACK;
+                stopButtonBackG = Color.LIGHT_GRAY;
 		stopButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VLCPlayer.emp.stop();
-                                setButtonIcon(playpauseButton,"play.png" );
+                                playpauseButton.play = true;
                                 bar.setValue(0);
 			}
 		});
                 
                 
-                moveLeftButton = new JButton();
-                setButtonIcon(moveLeftButton,"pdt.png" );
+                moveLeftButton = new MoveBackwardButton();
+                moveLeftColor = Color.BLACK;
+                moveLeftBackG = Color.LIGHT_GRAY;
 		moveLeftButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -80,26 +172,28 @@ public class PlayerComponent extends JPanel {
 			}
 		});
                 
-		playpauseButton = new JButton();
-                setButtonIcon(playpauseButton,"play.png" );
+		playpauseButton = new PlayPauseButton();
+                playpauseColor = Color.BLACK;
+                playpauseBackG = Color.LIGHT_GRAY;
 		playpauseButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				vlcplayer.playVideo();
                                 if (VLCPlayer.emp.isPlaying()){
                                     VLCPlayer.emp.pause();
-                                    setButtonIcon(playpauseButton,"play.png" );
+                                 //   setButtonIcon(playpauseButton,"play.png" );
                                 }
                                 else{
                                     VLCPlayer.emp.play();
-                                    setButtonIcon(playpauseButton,"pause.png" );
+                                 //   setButtonIcon(playpauseButton,"pause.png" );
                                 }
                         }
 		});
                 
-                moveRightButton = new JButton();
-                setButtonIcon(moveRightButton,"pdp.png" );
-		moveRightButton .addActionListener(new ActionListener(){
+                moveRightButton = new MoveForwardButton();
+                moveRightColor = Color.BLACK;
+                moveRightBackG = Color.LIGHT_GRAY;
+		moveRightButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
                             long newTime = 
@@ -111,33 +205,75 @@ public class PlayerComponent extends JPanel {
                                 VLCPlayer.emp.setTime(newTime);
 			}
 		});
-                
+                JPanel sliderPanel = new JPanel();
                 soundSlider = new JSlider();
                 soundSlider.setOrientation(JSlider.HORIZONTAL);
-                
+              
                 soundSlider.addChangeListener(new SoundSliderListener());
+                soundSlider.setPreferredSize(new Dimension(70,20));
+                soundSlider.putClientProperty("JSlider.isFilled", Boolean.TRUE);
+                soundSlider.setValue(30);
                 
+                SpeakerButton s = new SpeakerButton();
+                s.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!VLCPlayer.emp.isMute()){
+                           oldVolume = VLCPlayer.emp.getVolume();
+                           VLCPlayer.emp.mute(true);
+                        }
+                        else{
+                            VLCPlayer.emp.mute(false);
+                        //   VLCPlayer.emp.setVolume(oldVolume);
+                        }
+                    }
+                });
+                sliderPanel.add(s);
+                sliderPanel.add(soundSlider);
+            
+
                 
                 bar = new JProgressBar(0,100);
-               
+
+                bar.setPreferredSize(new Dimension(this.getWidth(),10));
+                bar.addMouseListener(new MouseAdapter(){
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        long maxTime = VLCPlayer.emp.getLength();
+                        double temp = e.getPoint().x / ((double)bar.getWidth());
+                        long goTime = (long)(temp * maxTime);
+                        VLCPlayer.emp.setTime(goTime);
+                    }   
+                });
                 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(1, 6));
-		//buttonPanel.add(chooserButton);
-		buttonPanel.add(stopButton);
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT,5,5)); 
+                buttonPanel.add(stopButton);
 		buttonPanel.add(moveLeftButton);
                 buttonPanel.add(playpauseButton );
 		buttonPanel.add(moveRightButton);
-		buttonPanel.add(soundSlider);
-		
-                JPanel functionalities = new JPanel();
-                functionalities.setLayout(new BoxLayout(functionalities,BoxLayout.Y_AXIS));
-                functionalities.add(bar, BorderLayout.NORTH);
-                functionalities.add(buttonPanel, BorderLayout.CENTER);
+                
+                // Borderlayout center
+                JPanel empty = new JPanel();
+                
+                
+		JPanel bottomPanel = new JPanel();
+                bottomPanel.setLayout(new BorderLayout(0,0));
+                
+         
+		bottomPanel.add(buttonPanel,BorderLayout.WEST);
+                bottomPanel.add(empty,BorderLayout.CENTER);
+                bottomPanel.add(sliderPanel,BorderLayout.EAST);
+                
+                
+                functionalities = new JPanel();
+                functionalities.setLayout(new BorderLayout(0,0));
+                functionalities.add(bar, BorderLayout.CENTER);
+                functionalities.add(bottomPanel, BorderLayout.SOUTH);
                 
 		add(functionalities,BorderLayout.SOUTH);
                 
-              
+                revalidate();
 	}
         
         /**
@@ -233,20 +369,31 @@ public class PlayerComponent extends JPanel {
         @Override
         public synchronized void paintComponent(Graphics g){
             super.paintComponent(g);
-    //        chooserButton.setBackground(chooserButtonColor);
-            stopButton.setBackground(stopButtonColor);
-            moveLeftButton.setBackground(moveLeftColor);
-            playpauseButton.setBackground(playpauseColor);
-            moveRightButton.setBackground(moveRightColor);
+            functionalities.setBackground(downPanelColor);
+            stopButton.setColor(stopButtonColor);
+            moveLeftButton.setColor(moveLeftColor);
+            playpauseButton.setColor(playpauseColor);
+            moveRightButton.setColor(moveRightColor);
             soundSlider.setBackground(soundSliderColor);
             
+            stopButton.setBackground(stopButtonBackG);
+            moveLeftButton.setBackground(moveLeftBackG);
+            playpauseButton.setBackground(playpauseBackG);
+            moveRightButton.setBackground(moveRightBackG);
+            
         }
-    
+        
+        private JPanel functionalities;
+        private JPanel buttonPanel ;
+
 	private String file;
         private int playerBorder;
         public static  JProgressBar bar;
         private final PropertyChangeSupport mPcs = 
                 new PropertyChangeSupport(this);
+        
+        private Color downPanelColor;
+        
         private Color chooserButtonColor;
         private Color stopButtonColor;
         private Color moveLeftColor;
@@ -254,12 +401,41 @@ public class PlayerComponent extends JPanel {
         private Color moveRightColor;
         private Color soundSliderColor;
         
+        private Color chooserButtonBackG;
+        private Color stopButtonBackG;
+        private Color moveLeftBackG;
+        private Color playpauseBackG;
+        private Color moveRightBackG;
+        
+        private int oldVolume;
+        
     //    public static JButton chooserButton;
-        public static JButton stopButton;
-        public static JButton moveLeftButton;
-        public static JButton playpauseButton;
-        public static JButton moveRightButton;
+        private static StopButton stopButton;
+        private static MoveBackwardButton moveLeftButton;
+        private static PlayPauseButton playpauseButton;
+        private static MoveForwardButton moveRightButton;
         public static JSlider soundSlider;
+
+    /**
+     * @return the moveRightBackG
+     */
+    public Color getMoveRightBackG() {
+        return moveRightBackG;
+    }
+
+    /**
+     * @return the downPanelColor
+     */
+    public Color getDownPanelColor() {
+        return downPanelColor;
+    }
+
+    /**
+     * @param downPanelColor the downPanelColor to set
+     */
+    public void setDownPanelColor(Color downPanelColor) {
+        this.downPanelColor = downPanelColor;
+    }
 
 }
 
@@ -268,7 +444,8 @@ class SoundSliderListener implements ChangeListener{
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider j = (JSlider)e.getSource();
-        VLCPlayer.emp.setVolume(j.getValue());
+        if (!VLCPlayer.emp.isMute())
+            VLCPlayer.emp.setVolume(j.getValue());
     }
 
 }

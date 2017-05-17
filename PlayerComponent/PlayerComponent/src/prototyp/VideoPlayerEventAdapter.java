@@ -15,10 +15,8 @@ public class VideoPlayerEventAdapter extends MediaPlayerEventAdapter {
              (float)((float)VLCPlayer.emp.getTime()/VLCPlayer.emp.getLength());
         PlayerComponent.bar.setValue(Math.round(videoProgress * 100));
     }
-
     @Override
     public void finished(MediaPlayer mp) {
          VLCPlayer.emp.stop();
-         PlayerComponent.setButtonIcon(PlayerComponent.playpauseButton,"play.png" );
     }
 }
