@@ -33,7 +33,11 @@ Kroki do wykonania
 Oczekiwany rezultat: Zalogowanie się do panelu administratora pod nazwą admina "admin"
 Warunki końcowe: Administrator jest zalogowany
 
+Tytuł:Sprawdzenie ochrony przed SQL Incjection
 
+1. W pole loginu wpisz znany login - admin
+2. W pole hasła wpisz " ' or '1' = '1 "
+Oczekiwany rezultat: Zalogowanie powinno zakończyć się niepowodzeniem
 
 Tytuł: Dodawanie nowej reklamy
 Warunek wstępny: Administrator jest zalogowany do panelu
@@ -73,7 +77,7 @@ Tytuł: Obsługa polskich znaków
 Warunek wstępny: brak
 Kroki do wykonania
 1. Dodaj lub edytuj dowolną reklamę
-2. W dowolnym polach tekstowtych użyj polskich znaków
+2. W dowolnym polu tekstowym wpisz: "Zażółć gęślą jaźń"
 3. Zatwierdź
 
 Oczekiwany rezultat: Powinny pojawiać się poprawnie polskie znaki
@@ -86,5 +90,4 @@ Kroki do wykonania
 2. Dodaj, edytuj i usuń wpis pliku dowolnej reklamy
 
 Oczekiwany rezultat: Reakcja tabeli na wprowadzane zmiany
-
 
