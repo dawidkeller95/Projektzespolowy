@@ -1,3 +1,4 @@
+ID: 1
 Tytuł: Sprawdzenie działania ostrzeżenia przy braku połączenia z bazą
 Warunek wstępny: Brak uruchomionego serwera baz danych
 
@@ -8,19 +9,20 @@ Oczekiwany rezultat: Wyświetlenie komunikatu informującego o braku połączeni
 Warunki końcowe: Program kończy działanie
 
 
-
+ID: 2
 Tytuł: Sprawdzenie modułu logowania
 Warunek wstępny: uruchomiony serwer MySQL
 
 Kroki do wykonania
-1. W oknie logowania, wpisz niepoprawny login i dowolne hasło
-2. Wpisz poprawny login, lecz niepoprawne hasło
+1. W oknie logowania, wpisz niepoprawny login i dowolne hasło, następnie wciśnij enter
+2. Wpisz poprawny login (np. admin), lecz niepoprawne hasło (inne niż 123456, np. qwerty)
+3. W kolejnej próbie logowania wpisz poprawny login oraz puste hasło
 
 Oczekiwany rezultat: Wyswietlenie komunikatu o niepowodzeniu logowania
 Warunki końcowe: Niepowodzenie zalogowania do systemu
 
 
-
+ID: 3
 Tytuł: Logowanie do systemu
 Warunek wstępny: uruchomiony serwer MySQL z bazą danych Ads
 
@@ -33,23 +35,40 @@ Kroki do wykonania
 Oczekiwany rezultat: Zalogowanie się do panelu administratora pod nazwą admina "admin"
 Warunki końcowe: Administrator jest zalogowany
 
+ID: 4
 Tytuł:Sprawdzenie ochrony przed SQL Incjection
-
+Warunek wstępny: uruchomiony serwer MySQL z bazą danych Ads
+Kroki do wykonania
 1. W pole loginu wpisz znany login - admin
-2. W pole hasła wpisz " ' or '1' = '1 "
+2. W pole hasła wpisz " ' or '1' = '1 " (kod ten powoduje zalogowanie )
+
 Oczekiwany rezultat: Zalogowanie powinno zakończyć się niepowodzeniem
 
+
+ID: 5
 Tytuł: Dodawanie nowej reklamy
 Warunek wstępny: Administrator jest zalogowany do panelu
 Kroki do wykonania
 1. Wciśnij przycisk Dodaj reklamę
-2. Uzupełnij pola dowolnymi wartościami
+2. Uzupełnij pola nazw dowolnymi wartościami
 3. Wciśnij przycisk Zatwierdź
 
 Oczekiwany rezultat: W tabeli reklam powinna pojawić się dodana reklama
 
 
+ID: 6
+Tytuł: Sprawdzanie pół liczbowych
+Warunek wstępny: Administrator jest zalogowany do panelu
+Kroki do wykonania
+1. Wciśnij przycisk Dodaj reklamę
+2. Uzupełnij pola tekstowe wartościami
+3. W pole "Planowana ilość wyświetleń" wpisz tekst, np. "asdf"
+4. Wciśnij przycisk Zatwierdź
 
+Oczekiwany rezultat: Wyświetlony zostaje komunikat o nieprawidłowej liczbie
+
+
+ID: 7
 Tytuł: Edycja reklamy
 Warunek wstępny: Administrator jest zalogowany do panelu
 Kroki do wykonania
@@ -62,6 +81,7 @@ Oczekiwany rezultat: Zaznaczona reklama powinna zmienić wartość
 
 
 
+ID: 8
 Tytuł: Usuwanie reklamy
 Warunek wstępny: Administrator jest zalogowany do panelu
 Kroki do wykonania
@@ -72,7 +92,7 @@ Kroki do wykonania
 Oczekiwany rezultat: Z tabeli reklam powinna zniknąć zaznaczona reklama
 
 
-
+ID: 9
 Tytuł: Obsługa polskich znaków
 Warunek wstępny: brak
 Kroki do wykonania
@@ -83,7 +103,7 @@ Kroki do wykonania
 Oczekiwany rezultat: Powinny pojawiać się poprawnie polskie znaki
 
 
-
+ID: 10
 Tytuł:Test pozostałych tabel
 Kroki do wykonania
 1. Dodaj, edytuj i usuń wpis Reklamodawcy
