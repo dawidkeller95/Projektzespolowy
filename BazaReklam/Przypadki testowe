@@ -57,11 +57,11 @@ Oczekiwany rezultat: W tabeli reklam powinna pojawić się dodana reklama
 
 
 ID: 6
-Tytuł: Sprawdzanie pół liczbowych
+Tytuł: Walidacja pól liczbowych
 Warunek wstępny: Administrator jest zalogowany do panelu
 Kroki do wykonania
 1. Wciśnij przycisk Dodaj reklamę
-2. Uzupełnij pola tekstowe wartościami
+2. Uzupełnij pola tekstowe dowolnymi wartościami
 3. W pole "Planowana ilość wyświetleń" wpisz tekst, np. "asdf"
 4. Wciśnij przycisk Zatwierdź
 
@@ -74,7 +74,7 @@ Warunek wstępny: Administrator jest zalogowany do panelu
 Kroki do wykonania
 1. Zaznacz dowolną reklamę
 2. Wciśnij przycisk Edytuj reklamę
-3. Zmień dowolne pola
+3. Zmień wartości wszystkich pól
 4. Wciśnij przycisk zatwierdź
 
 Oczekiwany rezultat: Zaznaczona reklama powinna zmienić wartość
@@ -100,7 +100,7 @@ Kroki do wykonania
 2. W dowolnym polu tekstowym wpisz: "Zażółć gęślą jaźń"
 3. Zatwierdź
 
-Oczekiwany rezultat: Powinny pojawiać się poprawnie polskie znaki
+Oczekiwany rezultat: W tabeli powinny pojawiać się poprawnie polskie znaki
 
 
 ID: 10
