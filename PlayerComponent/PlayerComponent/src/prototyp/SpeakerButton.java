@@ -27,7 +27,7 @@ public class SpeakerButton extends JButton implements MouseListener{
     
     
     public SpeakerButton(){
-        this.setPreferredSize(new Dimension(20,32));
+        this.setPreferredSize(new Dimension(32,32));
         this.speakerColor= Color.BLACK;
         this.background = Color.LIGHT_GRAY;
         this.soundOn = true;
@@ -44,10 +44,10 @@ public class SpeakerButton extends JButton implements MouseListener{
         g.setColor(background);
         g.fillRect(0, 0, width, height);
         g.setColor(speakerColor);
-        int[] x1 = { 5, width - 5 , width - 5 };
-        int[] y1 = { height/2, 5  , height - 5  };
+        int[] x1 = { 9, 22 , 22 };
+        int[] y1 = { 16, 5  , 26  };
         
-        g.fillRect(5, height/3, width/3 , height - height*2 / 3 );
+        g.fillRect(8, 11, 13 , 10 );
         g.fillPolygon(x1, y1, 3);
         
        

@@ -24,8 +24,8 @@ public class PlayPauseButton extends JButton implements MouseListener {
     
     public PlayPauseButton(){
         this.setPreferredSize(new Dimension(32,32));
-        this.color = Color.BLACK;
-        this.background = Color.LIGHT_GRAY;
+     //   this.color = Color.BLACK;
+     //   this.background = Color.LIGHT_GRAY;
         this.play = true;
         this.addMouseListener(this);
     }

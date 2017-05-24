@@ -5,16 +5,18 @@
             <url>src/prototyp/PlayerComponent.java</url>
             <bookmark id="1">
                 <name/>
-                <line>136</line>
+                <line>48</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/PlaySelect.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/PlayerComponent.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/PlayPauseButtonListener.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/VLCPlayer.java</file>
+            <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/SoundSlider.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/SpeakerButton.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/VideoPlayerEventAdapter.java</file>
             <file>file:/C:/Users/Janusz/Documents/NetBeansProjects/Budzish/src/prototyp/MoveBackwardButton.java</file>

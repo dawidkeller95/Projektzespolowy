@@ -25,7 +25,7 @@ public class StopButton extends JButton {
     public StopButton(){
         this.setPreferredSize(new Dimension(32,32));
         this.stopColor = Color.BLACK;
-        this.background = Color.LIGHT_GRAY;
+        this.background = Color.BLUE;
     }
     
     @Override

@@ -5,6 +5,7 @@ import com.sun.jna.NativeLibrary;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Rectangle;
+import javax.swing.JOptionPane;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -34,7 +35,7 @@ public class VLCPlayer {
     /**
      * Play video
      */
-    public void playVideo(){
+    public void playLocalVideo(){
         if(currentFile.compareTo(file) != 0){
             emp.setVideoSurface(mpf.newVideoSurface(canvas));
             emp.setEnableMouseInputHandling(false);
@@ -42,6 +43,16 @@ public class VLCPlayer {
             emp.prepareMedia(file);
             currentFile = "" + file;
         }
+    }
+    
+    /**
+     * Play video
+     */
+    public void playYoutubeVideo(String url){
+        emp.setVideoSurface(mpf.newVideoSurface(canvas));
+        emp.setEnableMouseInputHandling(false);
+        emp.setEnableKeyInputHandling(false);
+        emp.playMedia(url);
     }
     
     /**
@@ -78,7 +89,7 @@ public class VLCPlayer {
     }
 
     public static EmbeddedMediaPlayer emp;
-    private MediaPlayerFactory mpf;
+    private final MediaPlayerFactory mpf;
     private String file;
     private String currentFile;
     private Canvas canvas;
