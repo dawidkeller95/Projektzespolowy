@@ -1,0 +1,109 @@
+ID: 1
+Tytu³: W³¹czenie filmu z serwisu Youtube
+
+Kroki do wykonania
+1. WejdŸ we w³aœciwoœci komponentu odtwarzacza
+2. We w³aœciwoœci „url” wpisz link filmu z Youtube
+3. Zaakceptuj zmiany
+4. W³¹cz program
+5. Wciœnij Play na odtwarzaczu
+
+Oczekiwany rezultat: Wyœwietlenie ¿¹danego filmu z serwisu Youtube
+
+
+ID: 2
+Tytu³: Reakcja ekranu odtwarzacza na wciœniêcie lewego przycisku myszy (zatrzymanie)
+
+Kroki do wykonania
+1. Odtwórz dowolny film
+2. Po chwili wciœnij lewy przycisk na ekran odtwarzacza
+
+Oczekiwany rezultat: Film powinien siê zatrzymaæ
+
+ID: 3
+Tytu³: Reakcja ekranu odtwarzacza na wciœniêcie lewego przycisku myszy (wznowienie)
+
+Kroki do wykonania
+1. Odtwórz dowolny film
+2. Po chwili wciœnij lewy przycisk na ekran odtwarzacza
+3. Wciœnij lewy przycisk myszki na ekran odtwarzacza
+
+Oczekiwany rezultat: Film powinien zostaæ wznowiony
+
+ID: 4
+Tytu³: Przewijanie filmu do przodu za pomoc¹ przycisku
+
+Kroki do wykonania
+1. Odtwórz dowolny film
+2. Wciœnij przycisk przewijania do przodu ( >> ) 
+
+Oczekiwany rezultat: Film powinien zostaæ przewiniêty do przodu
+
+ID: 5
+Tytu³: Przewijanie filmu do przodu ty³u za pomoc¹ przycisku
+
+Kroki do wykonania
+1. Odtwórz dowolny film
+2. Wciœnij przycisk przewijania do ty³u ( << ) 
+
+Oczekiwany rezultat: Film powinien zostaæ przewiniêty do ty³u
+
+
+ID: 6
+Tytu³: Przewijanie filmu za pomoc¹ klikniêcia na pasek odtwarzania filmu
+
+Kroki do wykonania
+1. Odtwórz dowolny film
+2. Nacisnij na dowolne miejsce na pasku odtwarzania filmu
+
+Oczekiwany rezultat: Film powinien zostaæ przewiniêty do okreœlonego miejsca
+
+ID: 7
+Tytu³: Sprawdzenie odtwarzania filmów dla formatu .mp4
+
+Kroki do wykonania
+1. WejdŸ we w³aœciwoœci komponentu odtwarzacza
+2. W³aœciwoœæ „local” zaznacz na true
+3. We w³aœciwoœci „file” wpisz nazwê istniej¹cego filmu wraz z rozszerzeniem .mp4
+4. W³¹cz program
+5. Wciœnij Play na odtwarzaczu
+
+Oczekiwany rezultat: Wyœwietlenie ¿¹danego filmu
+
+ID: 8
+Tytu³: Sprawdzenie odtwarzania filmów dla formatu .flv
+
+Kroki do wykonania
+1. WejdŸ we w³aœciwoœci komponentu odtwarzacza
+2. W³aœciwoœæ „local” zaznacz na true
+3. We w³aœciwoœci „file” wpisz nazwê istniej¹cego filmu wraz z rozszerzeniem .flv
+4. W³¹cz program
+5. Wciœnij Play na odtwarzaczu
+
+Oczekiwany rezultat: Wyœwietlenie ¿¹danego filmu
+
+ID: 9
+Tytu³: Sprawdzenie odtwarzania filmów dla formatu .mpeg
+
+Kroki do wykonania
+1. WejdŸ we w³aœciwoœci komponentu odtwarzacza
+2. W³aœciwoœæ „local” zaznacz na true
+3. We w³aœciwoœci „file” wpisz nazwê istniej¹cego filmu wraz z rozszerzeniem .mpeg
+4. W³¹cz program
+5. Wciœnij Play na odtwarzaczu
+
+Oczekiwany rezultat: Wyœwietlenie ¿¹danego filmu
+
+ID: 10
+Tytu³: Sprawdzenie odtwarzania filmów dla formatu .wmv
+
+Kroki do wykonania
+1. WejdŸ we w³aœciwoœci komponentu odtwarzacza
+2. W³aœciwoœæ „local” zaznacz na true
+3. We w³aœciwoœci „file” wpisz nazwê istniej¹cego filmu wraz z rozszerzeniem .wmv
+4. W³¹cz program
+5. Wciœnij Play na odtwarzaczu
+
+Oczekiwany rezultat: Wyœwietlenie ¿¹danego filmu
+
+
