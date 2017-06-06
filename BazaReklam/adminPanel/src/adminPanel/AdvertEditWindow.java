@@ -13,6 +13,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
@@ -184,25 +185,36 @@ public class AdvertEditWindow extends JDialog {
 		
 	}
 	
-	private void Zatwierdz(){
+	private void Zatwierdz() {
 		int typ = 0;
-		if(videoRButton.isSelected()) typ = 1;
-		else if(bannerRButton.isSelected()) typ = 2;
-		
-		
-		if(editMode){
+		if (videoRButton.isSelected())
+			typ = 1;
+		else if (bannerRButton.isSelected())
+			typ = 2;
+		if (editMode) {
 			try {
-				db.updateAdbyID(rowRS.getInt("Rek_ID"), AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
-			} catch (NumberFormatException | SQLException e) {
+				db.updateAdbyID(rowRS.getInt("Rek_ID"), AdNameField.getText(),
+						AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()),
+						Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
+				this.dispose();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Wprowadzono nieprawidłową liczbę!", "Błąd",
+						JOptionPane.ERROR_MESSAGE, null);
 			}
+		} else {
+			try {
+				db.addAd(AdNameField.getText(), AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()),
+						Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
+				this.dispose();
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Wprowadzono nieprawidłową liczbę!", "Błąd",
+						JOptionPane.ERROR_MESSAGE, null);
+			}
+
 		}
-		else{
-			db.addAd(AdNameField.getText(),AdvertisersIDs.get(AdvertiserComboBox.getSelectedIndex()), Integer.parseInt(planViewCountField.getText()), typ, chckbxAktywna.isSelected());
-		}
-		this.dispose();
 	}
-		
 
 }
